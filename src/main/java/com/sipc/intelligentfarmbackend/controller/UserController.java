@@ -2,16 +2,20 @@ package com.sipc.intelligentfarmbackend.controller;
 
 import com.sipc.intelligentfarmbackend.aop.Pass;
 import com.sipc.intelligentfarmbackend.pojo.domain.User;
+import com.sipc.intelligentfarmbackend.pojo.dto.UserDto;
 import com.sipc.intelligentfarmbackend.pojo.model.para.LoginPara;
 import com.sipc.intelligentfarmbackend.pojo.model.res.CommonResult;
 import com.sipc.intelligentfarmbackend.pojo.model.res.LoginRes;
 import com.sipc.intelligentfarmbackend.service.UserService;
+import com.sipc.intelligentfarmbackend.utils.JwtUtils;
+import com.sipc.intelligentfarmbackend.utils.TokenThreadLocalUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @AllArgsConstructor
 public class UserController {
     private UserService userService;
@@ -33,5 +37,18 @@ public class UserController {
     @GetMapping("/get/user/list")
     public CommonResult<List<User>> getSpecialUser(@RequestParam Integer roleId){
         return CommonResult.success(userService.getSpecialUser(roleId));
+    }
+    @GetMapping("/get/user/list/info")
+    public CommonResult<List<UserDto>> getSpecialUserInfo(@RequestParam Integer roleId){
+        return CommonResult.success(userService.getSpecialUserList(roleId));
+    }
+    @GetMapping("/get/user/enterprise")
+    public CommonResult<List<UserDto>> getSpecialUserEnterprise(@RequestParam Integer roleId){
+        return CommonResult.success(userService.getSpecialEnterprise(roleId));
+    }
+    @GetMapping("/get/user/info")
+    public CommonResult<User> getUserInfo(){
+        User user = JwtUtils.getUserByToken(TokenThreadLocalUtil.getInstance().getToken());
+        return CommonResult.success(userService.getUserInfoById(user.getId()));
     }
 }

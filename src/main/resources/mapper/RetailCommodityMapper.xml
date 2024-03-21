@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sipc.intelligentfarmbackend.mapper.RetailCommodityMapper">
+    <select id="getCommodity" resultType="com.sipc.intelligentfarmbackend.pojo.domain.RetailCommodity">
+        SELECT *
+        FROM retail_commodity
+        <where>
+            AND user_id = #{userId}
+            <if test="keyWord != null and keyWord != ''">
+                AND ((id like concat('%',#{keyWord},'%'))
+                OR (`name` like concat('%',#{keyWord},'%'))
+                OR ( price like concat('%',#{keyWord},'%'))
+                OR (`time` like concat('%',#{keyWord},'%'))
+                OR (`status` like concat('%',#{keyWord},'%')))
+            </if>
+        </where>
+        LIMIT #{pageSize} OFFSET ${offset}
+    </select>
+    <select id="selectAllPlantPages" resultType="com.sipc.intelligentfarmbackend.pojo.domain.RetailCommodity">
+        SELECT *
+        FROM retail_commodity
+        <where>
+            <if test="keyWord != null and keyWord != ''">
+                AND ((id like concat('%',#{keyWord},'%'))
+                OR (`name` like concat('%',#{keyWord},'%'))
+                OR ( price like concat('%',#{keyWord},'%'))
+                OR (`time` like concat('%',#{keyWord},'%'))
+                OR (`status` like concat('%',#{keyWord},'%')))
+            </if>
+        </where>
+    </select>
+    <select id="selectAllPlantInfoPage"
+            resultType="com.sipc.intelligentfarmbackend.pojo.domain.RetailCommodity">
+        SELECT *
+        FROM retail_commodity
+        <where>
+            <if test="keyWord != null and keyWord != ''">
+                AND ((id like concat('%',#{keyWord},'%'))
+                OR (`name` like concat('%',#{keyWord},'%'))
+                OR ( price like concat('%',#{keyWord},'%'))
+                OR (`time` like concat('%',#{keyWord},'%'))
+                OR (`status` like concat('%',#{keyWord},'%')))
+            </if>
+        </where>
+        LIMIT #{pageSize} OFFSET ${offset}
+    </select>
+    <select id="selectAllPlantPageU" resultType="com.sipc.intelligentfarmbackend.pojo.domain.RetailCommodity">
+        SELECT *
+        FROM retail_commodity
+        <where>
+            AND user_id = #{userId}
+            <if test="keyWord != null and keyWord != ''">
+                AND ((id like concat('%',#{keyWord},'%'))
+                OR (`name` like concat('%',#{keyWord},'%'))
+                OR ( price like concat('%',#{keyWord},'%'))
+                OR (`time` like concat('%',#{keyWord},'%'))
+                OR (`status` like concat('%',#{keyWord},'%')))
+            </if>
+        </where>
+    </select>
+</mapper>

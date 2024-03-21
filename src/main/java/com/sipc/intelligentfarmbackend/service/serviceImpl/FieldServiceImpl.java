@@ -2,11 +2,9 @@ package com.sipc.intelligentfarmbackend.service.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sipc.intelligentfarmbackend.exception.BaseException;
-import com.sipc.intelligentfarmbackend.mapper.FieldMapper;
-import com.sipc.intelligentfarmbackend.mapper.FieldStatusMapper;
-import com.sipc.intelligentfarmbackend.mapper.OperationMapper;
-import com.sipc.intelligentfarmbackend.mapper.SensorMapper;
+import com.sipc.intelligentfarmbackend.mapper.*;
 import com.sipc.intelligentfarmbackend.pojo.domain.*;
+import com.sipc.intelligentfarmbackend.pojo.dto.FieldDiagram;
 import com.sipc.intelligentfarmbackend.pojo.dto.OperationDto;
 import com.sipc.intelligentfarmbackend.pojo.model.para.CreatFieldPara;
 import com.sipc.intelligentfarmbackend.pojo.model.res.FieldRes;
@@ -27,6 +25,7 @@ public class FieldServiceImpl implements FieldService {
     private OperationMapper operationMapper;
     private SensorMapper sensorMapper;
     private FieldStatusMapper fieldStatusMapper;
+    private FieldNoticeMapper fieldNoticeMapper;
     @Override
     public void addField(CreatFieldPara creatFieldPara) {
         Field field = new Field();
@@ -89,13 +88,43 @@ public class FieldServiceImpl implements FieldService {
                 .eq(FieldStatus::getFieldId,id)
                 .orderByDesc(FieldStatus::getUpdateTime)
                 .last("limit 1"));
+        List<FieldStatus> fieldStatusList = fieldStatusMapper.selectList(new LambdaQueryWrapper<FieldStatus>()
+                .eq(FieldStatus::getFieldId,id)
+                .orderByAsc(FieldStatus::getTimeType));
+        FieldDiagram fieldDiagram = new FieldDiagram();
+        for (FieldStatus status : fieldStatusList) {
+            fieldDiagram.convertToFieldStatus(status);
+        }
         // 封装数据
         BeanUtils.copyProperties(field,fieldRes);
         fieldRes.setOperationList(operationList);
         fieldRes.setFieldStatuses(fieldStatus);
         fieldRes.setSensorList(sensorList);
         fieldRes.setPlantTime(TimeUtil.getTimeByDate(field.getPlantTime()));
+        fieldRes.setFieldDiagram(fieldDiagram);
 
         return fieldRes;
+    }
+
+    @Override
+    public List<FieldStatus> getStatus(Integer id) {
+        return fieldStatusMapper.selectList(new LambdaQueryWrapper<FieldStatus>()
+                .eq(FieldStatus::getFieldId,id)
+                .orderByAsc(FieldStatus::getTimeType));
+    }
+
+    @Override
+    public List<FieldNotice> getFieldNotice() {
+        User user = JwtUtils.getUserByToken(TokenThreadLocalUtil.getInstance().getToken());
+        return fieldNoticeMapper.selectList(new LambdaQueryWrapper<FieldNotice>().eq(FieldNotice::getUserId,user.getId()));
+    }
+
+    @Override
+    public void alterNoticeStatus(Integer id) {
+        FieldNotice fieldNotice = fieldNoticeMapper.selectById(id);
+        fieldNotice.setStatus(1);
+        if(fieldNoticeMapper.updateById(fieldNotice) == 0){
+            throw new BaseException("更新状态失败");
+        }
     }
 }

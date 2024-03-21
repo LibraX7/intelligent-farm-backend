@@ -4,9 +4,15 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 
 @TableName ("product_info")
@@ -51,12 +57,12 @@ public class ProductInfo implements Serializable {
     /**
      * 存储方式
      */
-    @TableField("storageMethod")
+    @TableField("storage_method")
     private String storageMethod;
     /**
      * 净含量
      */
-    @TableField("netContent")
+    @TableField("net_content")
     private String netContent;
     /**
      * 食用推荐
@@ -74,4 +80,9 @@ public class ProductInfo implements Serializable {
     @TableField("product_id")
     private Integer productId;
 
+    @TableField("time")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime time;
 }

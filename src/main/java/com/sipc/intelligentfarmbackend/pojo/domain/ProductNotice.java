@@ -23,6 +23,8 @@ public class ProductNotice {
     private Integer status;
     @TableField("product_id")
     private Integer productId;
+    @TableField("trace_id")
+    private Integer traceId;
     @TableField("resource_id")
     private Integer resourceId;
 }

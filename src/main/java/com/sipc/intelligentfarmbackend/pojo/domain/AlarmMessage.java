@@ -35,4 +35,5 @@ public class AlarmMessage implements Serializable {
      */
     @TableField("field_id")
     private Integer fieldId;
+
 }

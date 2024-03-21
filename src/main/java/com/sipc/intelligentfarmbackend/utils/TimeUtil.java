@@ -21,8 +21,8 @@ public class TimeUtil {
     }
 
     public static String getTimeByDate(LocalDateTime date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        return simpleDateFormat.format(date);
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return formatter1.format(date);
     }
     public static String getTimeByDateS(LocalDateTime date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");

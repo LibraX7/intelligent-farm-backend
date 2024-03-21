@@ -5,10 +5,50 @@
         SELECT *
         FROM resource_notice
         <where>
-            AND id = #{resourceId}
+            AND resource_id = #{resourceId}
             <if test="keyWord != null and keyWord != ''">
                 AND ((id like concat('%',#{keyWord},'%'))
-                OR (`farmer` like concat('%',#{keyWord},'%'))
+                OR (`fammer` like concat('%',#{keyWord},'%'))
+                OR (`source` like concat('%',#{keyWord},'%'))
+                OR (`time` like concat('%',#{keyWord},'%')))
+            </if>
+        </where>
+        LIMIT #{pageSize} OFFSET ${offset}
+    </select>
+    <select id="selectAllPlantInfoPage"
+            resultType="com.sipc.intelligentfarmbackend.pojo.domain.ResourceNotice">
+        SELECT *
+        FROM resource_notice
+        <where>
+            <if test="keyWord != null and keyWord != ''">
+                AND ((id like concat('%',#{keyWord},'%'))
+                OR (`fammer` like concat('%',#{keyWord},'%'))
+                OR (`source` like concat('%',#{keyWord},'%'))
+                OR (`time` like concat('%',#{keyWord},'%')))
+            </if>
+        </where>
+        LIMIT #{pageSize} OFFSET ${offset}
+    </select>
+    <select id="selectAllPlantPages" resultType="com.sipc.intelligentfarmbackend.pojo.domain.ResourceNotice">
+        SELECT *
+        FROM resource_notice
+        <where>
+            <if test="keyWord != null and keyWord != ''">
+                AND ((id like concat('%',#{keyWord},'%'))
+                OR (`fammer` like concat('%',#{keyWord},'%'))
+                OR (`source` like concat('%',#{keyWord},'%'))
+                OR (`time` like concat('%',#{keyWord},'%')))
+            </if>
+        </where>
+    </select>
+    <select id="selectAllPlantPageU" resultType="com.sipc.intelligentfarmbackend.pojo.domain.ResourceNotice">
+        SELECT *
+        FROM resource_notice
+        <where>
+            AND resource_id = #{resourceId}
+            <if test="keyWord != null and keyWord != ''">
+                AND ((id like concat('%',#{keyWord},'%'))
+                OR (`fammer` like concat('%',#{keyWord},'%'))
                 OR (`source` like concat('%',#{keyWord},'%'))
                 OR (`time` like concat('%',#{keyWord},'%')))
             </if>

@@ -41,4 +41,10 @@ public class User implements Serializable {
 
     @TableField("img_url")
     private String imgUrl;
+
+    @TableField("longitude")
+    private String longitude;
+
+    @TableField("latitude")
+    private String latitude;
 }

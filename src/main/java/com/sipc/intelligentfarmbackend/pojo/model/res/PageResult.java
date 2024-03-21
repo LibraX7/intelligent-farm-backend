@@ -12,7 +12,7 @@ public class PageResult<T> {
     private Long pages;
     private Long total;
     public List<T> records;
-    public PageResult<T> praisePage(Page<T> page) {
+    public PageResult<T> praisePage(IPage<T> page) {
         this.records = page.getRecords();
         this.total = page.getTotal();
         this.pageNo = page.getCurrent();

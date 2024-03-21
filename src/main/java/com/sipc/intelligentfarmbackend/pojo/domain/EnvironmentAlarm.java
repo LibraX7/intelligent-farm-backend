@@ -17,8 +17,13 @@ public class EnvironmentAlarm {
     @TableField("field_id")
     private Integer fieldId;
 
+    @TableField("field_name")
+    private String fieldName;
+
     @TableField("alarm_time")
     private LocalDateTime alarmTime;
+    @TableField("crop_name")
+    private String cropName;
 
     @TableField("alarm_program")
     private String alarmProgram;
@@ -26,9 +31,15 @@ public class EnvironmentAlarm {
     @TableField("outlier")
     private String outlier;
 
-    @TableField("normal")
-    private String normal;
+    @TableField("normal_max")
+    private Double normalMax;
 
-    @TableField("currentStatus")
+    @TableField("normal_min")
+    private Double normalMin;
+
+    @TableField("current_status")
     private String currentStatus;
+
+    @TableField("status_alarm_id")
+    private Integer statusAlarmId;
 }

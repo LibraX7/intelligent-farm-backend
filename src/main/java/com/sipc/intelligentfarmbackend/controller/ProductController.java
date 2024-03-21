@@ -3,13 +3,17 @@ package com.sipc.intelligentfarmbackend.controller;
 import com.sipc.intelligentfarmbackend.pojo.domain.ProductInfo;
 import com.sipc.intelligentfarmbackend.pojo.domain.ProductMission;
 import com.sipc.intelligentfarmbackend.pojo.domain.ProductNotice;
+import com.sipc.intelligentfarmbackend.pojo.model.para.NoticePara;
 import com.sipc.intelligentfarmbackend.pojo.model.res.CommonResult;
 import com.sipc.intelligentfarmbackend.pojo.model.res.PageResult;
 import com.sipc.intelligentfarmbackend.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@CrossOrigin
 @AllArgsConstructor
 public class ProductController {
     private ProductService productService;
@@ -43,5 +47,17 @@ public class ProductController {
         productService.outputProduct(id);
         return CommonResult.success();
     }
+    @PostMapping("/product/notice")
+    public CommonResult<String> addNoticeToDriver(@RequestBody NoticePara noticePara){
+        productService.noticeDriver(noticePara);
+        return CommonResult.success();
+    }
+    @PostMapping("/delete/product/notice")
+    public CommonResult<String> deleteNotice(@RequestBody List<Integer> ids){
+        productService.deleteNotice(ids);
+        return CommonResult.success();
+    }
+
+
 
 }

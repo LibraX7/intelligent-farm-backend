@@ -19,10 +19,6 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @author silentdragon, LibraX7
- * @date 2023/08/05
- */
 @Slf4j
 @Component
 public class MinioUtil {

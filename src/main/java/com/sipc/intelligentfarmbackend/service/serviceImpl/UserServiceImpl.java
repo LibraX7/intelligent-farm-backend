@@ -4,19 +4,23 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sipc.intelligentfarmbackend.exception.BaseException;
 import com.sipc.intelligentfarmbackend.mapper.UserMapper;
 import com.sipc.intelligentfarmbackend.pojo.domain.User;
+import com.sipc.intelligentfarmbackend.pojo.dto.UserDto;
 import com.sipc.intelligentfarmbackend.pojo.model.res.LoginRes;
 import com.sipc.intelligentfarmbackend.service.UserService;
 import com.sipc.intelligentfarmbackend.utils.JwtUtils;
+import com.sipc.intelligentfarmbackend.utils.MinioUtil;
 import com.sipc.intelligentfarmbackend.utils.StringUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
+    private MinioUtil minioUtil;
     @Override
     public LoginRes login(String phone,String code) {
         LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
@@ -40,11 +44,41 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserInfoById(Integer id) {
-        return userMapper.selectById(id);
+        User user = userMapper.selectById(id);
+        if(StringUtils.isNotEmpty(user.getImgUrl())){
+            user.setImgUrl(minioUtil.downloadFile(user.getImgUrl()));
+        }
+        return user;
     }
 
     @Override
     public List<User> getSpecialUser(Integer id) {
-        return userMapper.getSpecialUser(id);
+        List<User> userList = userMapper.getSpecialUser(id);
+        for (User user : userList) {
+            if(StringUtils.isNotEmpty(user.getImgUrl())){
+                user.setImgUrl(minioUtil.downloadFile(user.getImgUrl()));
+            }
+        }
+        return userList;
+    }
+
+    @Override
+    public List<UserDto> getSpecialUserList(Integer id) {
+        List<UserDto> userDtoList = new LinkedList<>();
+        List<User> userList = userMapper.getSpecialUser(id);
+        for (User user : userList) {
+            userDtoList.add(new UserDto(user.getId(),user.getName()));
+        }
+        return userDtoList;
+    }
+
+    @Override
+    public List<UserDto> getSpecialEnterprise(Integer id) {
+        List<UserDto> userDtoList = new LinkedList<>();
+        List<User> userList = userMapper.getSpecialUser(id);
+        for (User user : userList) {
+            userDtoList.add(new UserDto(user.getId(),user.getEnterpriseName()));
+        }
+        return userDtoList;
     }
 }

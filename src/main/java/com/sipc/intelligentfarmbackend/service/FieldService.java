@@ -1,8 +1,6 @@
 package com.sipc.intelligentfarmbackend.service;
 
-import com.sipc.intelligentfarmbackend.pojo.domain.Field;
-import com.sipc.intelligentfarmbackend.pojo.domain.Operation;
-import com.sipc.intelligentfarmbackend.pojo.domain.Sensor;
+import com.sipc.intelligentfarmbackend.pojo.domain.*;
 import com.sipc.intelligentfarmbackend.pojo.dto.OperationDto;
 import com.sipc.intelligentfarmbackend.pojo.model.para.CreatFieldPara;
 import com.sipc.intelligentfarmbackend.pojo.model.res.CommonResult;
@@ -18,4 +16,7 @@ public interface FieldService {
     List<Field> getFieldList();
     FieldRes getField(Integer id);
     void alterDevice(Integer id);
+    List<FieldStatus> getStatus(Integer id);
+    List<FieldNotice> getFieldNotice();
+    void alterNoticeStatus(Integer id);
 }

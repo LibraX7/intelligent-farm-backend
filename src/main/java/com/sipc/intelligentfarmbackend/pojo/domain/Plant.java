@@ -7,6 +7,11 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -59,10 +64,10 @@ public class Plant implements Serializable {
     private String fertilizer;
 
     /**
-     * 施肥方式
+     * 作物类型
      */
-    @TableField("fertilization_method")
-    private String fertilizationMethod;
+    @TableField("crop_type")
+    private String cropType;
 
     /**
      * 施肥周期
@@ -104,5 +109,13 @@ public class Plant implements Serializable {
      * 登记时间
      */
     @TableField("create_time")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
+
+    @TableField("notes")
+    private String notes;
+    @TableField("user_id")
+    private Integer userId;
 }

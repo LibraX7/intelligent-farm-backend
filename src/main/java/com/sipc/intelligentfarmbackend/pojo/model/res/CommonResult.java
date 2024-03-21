@@ -17,6 +17,11 @@ public class CommonResult<T> implements Serializable {
     private String msg;
     private T data;
 
+    public CommonResult(String code, String message) {
+        this.code = code;
+        this.msg = message;
+    }
+
     public static <T> CommonResult<T> success() {
         return new CommonResult<>(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage(), null);
     }

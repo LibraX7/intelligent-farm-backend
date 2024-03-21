@@ -19,7 +19,7 @@ public class NoticePara {
     /**
      * 原料厂商Id
      */
-    private Integer resourceId;
+    private Integer destId;
     /**
      * 备注
      */

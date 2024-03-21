@@ -33,7 +33,7 @@
 //                    ObjectMapper objectMapper = new ObjectMapper();
 //                    objectMapper.registerModule(new JavaTimeModule());
 //                    WeatherRequest entity = objectMapper.readValue(response.body(), WeatherRequest.class);
-//
+//                    System.out.println(entity);
 //                } else {
 //                    System.err.println("HTTP request failed with status code: " + response.statusCode());
 //                }

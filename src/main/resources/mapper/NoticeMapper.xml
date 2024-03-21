@@ -5,13 +5,54 @@
         SELECT *
         FROM driver_notice
         <where>
-                AND id = #{driverId}
+                AND driver_id = #{driverId}
             <if test="keyWord != null and keyWord != ''">
                 AND ((id like concat('%',#{keyWord},'%'))
                     OR (`source` like concat('%',#{keyWord},'%'))
-                    OR (destuination like concat('%',#{keyWord},'%'))
+                    OR (destination like concat('%',#{keyWord},'%'))
                     OR (notes like concat('%',#{keyWord},'%')))
             </if>
         </where>
+        LIMIT #{pageSize} OFFSET ${offset}
+
     </select>
+    <select id="selectAllNoticeInfoPage" resultType="com.sipc.intelligentfarmbackend.pojo.domain.DriverNotice">
+        SELECT *
+        FROM driver_notice
+        <where>
+            <if test="keyWord != null and keyWord != ''">
+                AND ((id like concat('%',#{keyWord},'%'))
+                OR (`source` like concat('%',#{keyWord},'%'))
+                OR (destination like concat('%',#{keyWord},'%'))
+                OR (notes like concat('%',#{keyWord},'%')))
+            </if>
+        </where>
+        LIMIT #{pageSize} OFFSET ${offset}
+    </select>
+    <select id="selectAllPlantPages" resultType="com.sipc.intelligentfarmbackend.pojo.domain.DriverNotice">
+        SELECT *
+        FROM driver_notice
+        <where>
+            AND driver_id = #{driverId}
+            <if test="keyWord != null and keyWord != ''">
+                AND ((id like concat('%',#{keyWord},'%'))
+                OR (`source` like concat('%',#{keyWord},'%'))
+                OR (destination like concat('%',#{keyWord},'%'))
+                OR (notes like concat('%',#{keyWord},'%')))
+            </if>
+        </where>
+    </select>
+    <select id="selectAllPlantPagesU" resultType="com.sipc.intelligentfarmbackend.pojo.domain.DriverNotice">
+        SELECT *
+        FROM driver_notice
+        <where>
+            <if test="keyWord != null and keyWord != ''">
+                AND ((id like concat('%',#{keyWord},'%'))
+                OR (`source` like concat('%',#{keyWord},'%'))
+                OR (destination like concat('%',#{keyWord},'%'))
+                OR (notes like concat('%',#{keyWord},'%')))
+            </if>
+        </where>
+    </select>
+
 </mapper>

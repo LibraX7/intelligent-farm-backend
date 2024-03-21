@@ -1,6 +1,8 @@
 package com.sipc.intelligentfarmbackend.controller;
 
 import com.sipc.intelligentfarmbackend.pojo.domain.ResourceNotice;
+import com.sipc.intelligentfarmbackend.pojo.dto.UserDto;
+import com.sipc.intelligentfarmbackend.pojo.model.para.NoticePara;
 import com.sipc.intelligentfarmbackend.pojo.model.para.ResourceNoticePara;
 import com.sipc.intelligentfarmbackend.pojo.model.res.CommonResult;
 import com.sipc.intelligentfarmbackend.pojo.model.res.PageResult;
@@ -9,7 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController()
 @AllArgsConstructor
 public class ResourceController {
@@ -28,8 +30,15 @@ public class ResourceController {
         resourceService.deleteInfo(ids);
         return CommonResult.success();
     }
-    @PostMapping("/resource/add")
-    public CommonResult<String> addNotice(@RequestBody ResourceNoticePara resourceNoticePara){
+    @PostMapping("/resource/out")
+    public CommonResult<String> outRepository(@RequestBody ResourceNoticePara resourceNoticePara){
+        resourceService.outRepository(resourceNoticePara);
         return CommonResult.success();
     }
+    @PostMapping("/resource/notice/driver")
+    public CommonResult<String> addNoticeToDriver(@RequestBody NoticePara noticePara){
+        resourceService.addNoticeToDriver(noticePara);
+        return CommonResult.success();
+    }
+
 }

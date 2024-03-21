@@ -2,7 +2,6 @@ package com.sipc.intelligentfarmbackend.mapper;
 
 import com.sipc.intelligentfarmbackend.pojo.domain.Field;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.sipc.intelligentfarmbackend.pojo.model.para.CreatFieldPara;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

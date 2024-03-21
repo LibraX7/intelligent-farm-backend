@@ -1,6 +1,8 @@
 package com.sipc.intelligentfarmbackend.controller;
 
 import com.sipc.intelligentfarmbackend.pojo.domain.Plant;
+import com.sipc.intelligentfarmbackend.pojo.domain.PlantStatus;
+import com.sipc.intelligentfarmbackend.pojo.dto.PlantDto;
 import com.sipc.intelligentfarmbackend.pojo.model.para.NoticePara;
 import com.sipc.intelligentfarmbackend.pojo.model.res.CommonResult;
 import com.sipc.intelligentfarmbackend.pojo.model.res.PageResult;
@@ -13,19 +15,20 @@ import java.util.List;
 /**
  * 溯源业务
  */
+@CrossOrigin
 @RestController
 @AllArgsConstructor
 public class TraceController {
     private TraceService traceService;
     @PostMapping("/add/trace")
-    public CommonResult<String> addTrace(Plant plant){
+    public CommonResult<String> addTrace(@RequestBody Plant plant){
         traceService.addTrace(plant);
         return CommonResult.success("添加成功");
     }
     @GetMapping("/get/page/trace")
-    public CommonResult<PageResult<Plant>> getTraceList(@RequestParam("pageNum") Integer pageNum,
-                                                        @RequestParam("pageSize") Integer pageSize,
-                                                        @RequestParam("keyWord") String keyWord){
+    public CommonResult<PageResult<PlantDto>> getTraceList(@RequestParam("pageNum") Integer pageNum,
+                                                           @RequestParam("pageSize") Integer pageSize,
+                                                           @RequestParam("keyWord") String keyWord){
         return CommonResult.success(traceService.getPlantList(pageNum,pageSize,keyWord));
     }
     @PostMapping("/delete/trace")
@@ -39,7 +42,13 @@ public class TraceController {
         traceService.addNoticeToDriver(notice);
         return CommonResult.success("添加成功");
     }
-
-
-
+    @PostMapping("/add/records/trace")
+    public CommonResult<String> addRecords(@RequestBody PlantStatus plantStatus){
+        traceService.addRecords(plantStatus);
+        return CommonResult.success();
+    }
+    @GetMapping("/get/records/trace")
+    public CommonResult<List<PlantStatus>> getRecords(@RequestParam Integer traceId){
+        return CommonResult.success(traceService.getRecords(traceId));
+    }
 }

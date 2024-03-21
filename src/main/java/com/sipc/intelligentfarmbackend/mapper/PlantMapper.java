@@ -1,11 +1,10 @@
 package com.sipc.intelligentfarmbackend.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sipc.intelligentfarmbackend.pojo.domain.Plant;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 /**
  * <p>
@@ -17,5 +16,8 @@ import java.util.List;
  */
 @Mapper
 public interface PlantMapper extends BaseMapper<Plant> {
-    Page<Plant> selectPlantInfoPage(Page<Plant> page,String keyWord);
+    Page<Plant> selectPlantInfoPage(Page<Plant> page,Integer pageSize,Integer offset,String keyWord,Integer userId);
+    Page<Plant> selectAllPlantInfoPage(Page<Plant> page, Integer pageSize,Integer offset, String keyWord);
+    Page<Plant> selectAllPlantPage(Page<Plant> page, String keyWord, Integer userId);
+    Page<Plant> selectAllPlantPages(Page<Plant> page, String keyWord);
 }

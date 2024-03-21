@@ -22,14 +22,18 @@ public class DiseaseAlarm {
     private LocalDateTime alarmTime;
 
     @TableField("status")
-    private String status;
+    private Integer status;
 
     @TableField("disease")
     private String disease;
 
-    @TableField("img_url")
-    private String imgUrl;
+    @TableField("image_url")
+    private String imageUrl;
 
-    @TableField("operation")
-    private String operation;
+    @TableField("field_name")
+    private String fieldName;
+    @TableField("user_id")
+    private Integer userId;
+    @TableField("corp_name")
+    private String corpName;
 }

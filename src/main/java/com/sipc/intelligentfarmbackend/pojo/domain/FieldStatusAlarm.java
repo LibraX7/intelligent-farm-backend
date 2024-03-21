@@ -35,12 +35,12 @@ public class FieldStatusAlarm implements Serializable {
     * 
     */
     @TableField("max")
-    private BigDecimal max;
+    private Double max;
     /**
     * 
     */
     @TableField("min")
-    private BigDecimal min;
+    private Double min;
 
 
 }

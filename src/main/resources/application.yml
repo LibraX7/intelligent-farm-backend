@@ -1,14 +1,48 @@
 server:
-  port: 8080
+  port: 8088
 
 spring:
   application:
-    name: intelligent-form
+    name: intelligent-farm
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://60.28.158.170:3306/intelligent_farm?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
     username: root
     password: sipc115
+  mqtt:
+    test2:
+      url: tcp://60.28.158.170:1883
+      clientId: test-subscriber
+      username: admin
+      password: sipc_115
+      topic: MyTopic
+      timeout: 100
+      qos: 0
+    test1:
+      url: tcp://60.28.158.170:1883
+      clientId: test-subscriber
+      username: admin
+      password: sipc_115
+      topic: MyTopic
+      timeout: 100
+  data:
+    redis:
+      host: 60.28.158.170
+      port: 6379
+      password:
+      database: 1
+      jedis:
+        pool:
+          # 连接池最大连接数（使用负值表示没有限制）
+          max-active: 8
+          # 连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-wait: -1ms
+          # 连接池中的最大空闲连接
+          max-idle: 8
+          # 连接池中的最小空闲连接
+          min-idle: 0
+          # 连接超时时间（毫秒）默认是2000ms
+          timeout: 10000ms
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.sipc.intelligentfarmbackend.pojo.domain
@@ -18,8 +52,8 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
 minio:
-  endpoint:
-  remoteEndpoint:
-  accesskey:
-  secretkey:
-  bucketname:
+  endpoint: http://60.28.158.170:9000
+  remoteEndpoint: http://60.28.158.170:9000
+  accesskey: 0J4CuMf6zGjxnNFMb9tK
+  secretkey: NnRWeyk6gP33QaR3m6TuxMlXYOOa32Z8pu3fppae
+  bucketname: intelligent-farm

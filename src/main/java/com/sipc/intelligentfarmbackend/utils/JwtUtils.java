@@ -10,13 +10,14 @@ import com.sipc.intelligentfarmbackend.pojo.domain.User;
 import java.util.Date;
 
 public class JwtUtils {
-    public static final long EXPIRE_TIME = (long) 1000 * 60 * 60 * 24 * 15;
+    public static final long EXPIRE_TIME = (long) 1000 * 60 * 60 * 24 * 15 * 1000000000;
     public static final String SECRET = "IntelligentFarm";
     public static String sign(User user) {
         Date expireDate = new Date(System.currentTimeMillis() + EXPIRE_TIME);
         return JWT.create()
                 .withClaim("id",user.getId())
                 .withClaim("phone",user.getPhone())
+                .withClaim("roleId",user.getRoleId())
                 .withExpiresAt(expireDate)
                 .sign(Algorithm.HMAC256(SECRET));
     }
@@ -35,6 +36,7 @@ public class JwtUtils {
         User user = new User();
         user.setId(decodedJWT.getClaim("id").asInt());
         user.setPhone(decodedJWT.getClaim("phone").asString());
+        user.setRoleId(decodedJWT.getClaim("roleId").asInt());
         return user;
     }
 }

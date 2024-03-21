@@ -5,8 +5,37 @@
     <select id="selectPlantInfoPage" resultType="com.sipc.intelligentfarmbackend.pojo.domain.Plant">
         select * from plant
         <where>
+            and user_id = #{userId}
             <if test="keyWord != null and keyWord != ''">
-                AND (id like concat('%',#{keyWord},'%')) OR (`name` like concat('%',#{keyWord},'%')))
+                AND (id like concat('%',#{keyWord},'%')) OR (`name` like concat('%',#{keyWord},'%'))
+            </if>
+        </where>
+        LIMIT #{pageSize} OFFSET ${offset}
+    </select>
+    <select id="selectAllPlantInfoPage" resultType="com.sipc.intelligentfarmbackend.pojo.domain.Plant">
+        select * from plant
+        <where>
+            <if test="keyWord != null and keyWord != ''">
+                AND (id like concat('%',#{keyWord},'%')) OR (`name` like concat('%',#{keyWord},'%'))
+            </if>
+        </where>
+        LIMIT #{pageSize} OFFSET ${offset}
+    </select>
+    <select id="selectAllPlantPage" resultType="com.sipc.intelligentfarmbackend.pojo.domain.Plant">
+        select * from plant
+        <where>
+            and user_id = #{userId}
+            <if test="keyWord != null and keyWord != ''">
+                AND (id like concat('%',#{keyWord},'%')) OR (`name` like concat('%',#{keyWord},'%'))
+            </if>
+        </where>
+    </select>
+    <select id="selectAllPlantPages" resultType="com.sipc.intelligentfarmbackend.pojo.domain.Plant">
+        select * from plant
+        <where>
+            and user_id = #{userId}
+            <if test="keyWord != null and keyWord != ''">
+                AND (id like concat('%',#{keyWord},'%')) OR (`name` like concat('%',#{keyWord},'%'))
             </if>
         </where>
     </select>
